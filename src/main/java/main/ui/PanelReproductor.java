@@ -7,17 +7,23 @@ public class PanelReproductor extends JPanel {
 
     // Método para cargar iconos desde resources
     private ImageIcon cargarIcono(String nombre){
-        return new ImageIcon(getClass().getResource("/" + nombre));
+        ImageIcon original = new ImageIcon(getClass().getResource("/" + nombre));
+
+        // Escalar a 40x40, ajusta si quieres más pequeño o más grande
+        Image img = original.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+        return new ImageIcon(img);
     }
+
 
 
     // Método para estilizar botones
     private void estilizar(JButton b) {
-        b.setFocusPainted(false);
-        b.setBorderPainted(false);
-        b.setContentAreaFilled(false);
-        b.setOpaque(false);
-        b.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        b.setFocusPainted(false); // Quitar el borde de enfoque
+        b.setBorderPainted(false); // Quitar el borde del botón
+        b.setContentAreaFilled(false); // Quitar el área de contenido
+        b.setOpaque(false); // Hacer el botón transparente
+        b.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambiar el cursor al pasar sobre el botón
     }
 
     // Constructor
@@ -38,15 +44,17 @@ public class PanelReproductor extends JPanel {
         JButton btnPause = new JButton(cargarIcono("pausa.png"));
         JButton btnStop = new JButton(cargarIcono("detener.png"));
 
+
+
         // Estilizar botones
-        estilizar(btnAtras);
+        estilizar(btnAtras); //
         estilizar(btnPlay);
         estilizar(btnAdelante);
         estilizar(btnPause);
         estilizar(btnStop);
 
         // ICONO volumen
-        JLabel iconoVolumen = new JLabel(cargarIcono("volume.png"));
+        JLabel iconoVolumen = new JLabel(cargarIcono("volumen.png"));
 
         // Slider de volumen
         JSlider volumen = new JSlider(0, 100, 50);
@@ -57,9 +65,9 @@ public class PanelReproductor extends JPanel {
         // Añadir al panel
         add(iconoVolumen);
         add(volumen);
-        add(btnAtras);
-        add(btnPlay);
         add(btnAdelante);
+        add(btnPlay);
+        add(btnAtras);
         add(btnPause);
         add(btnStop);
     }
