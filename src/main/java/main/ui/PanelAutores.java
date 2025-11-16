@@ -7,28 +7,29 @@ import java.awt.event.MouseEvent;
 
 public class PanelAutores extends JPanel {
 
-    private JList<String> listaAutores;       // Lista visual
-    private DefaultListModel<String> modelo;  // Datos de la lista
-    private JPopupMenu menuContextual;        // Menú contextual
+    private DefaultListModel<String> modelo;
+    private JList<String> listaAutores;
+    private JPopupMenu menuContextual;
 
     public PanelAutores() {
 
+        // Fondo general del panel izquierdo
         setBackground(new Color(44, 30, 27));
         setLayout(new BorderLayout());
 
-        // MODELO DE LISTA
+        // MODELO Y LISTA DE AUTORES
+
         modelo = new DefaultListModel<>();
         listaAutores = new JList<>(modelo);
 
         listaAutores.setBackground(new Color(44, 30, 27));
         listaAutores.setForeground(new Color(231, 199, 122));
         listaAutores.setSelectionBackground(new Color(70, 50, 45));
-        listaAutores.setFont(new Font("Georgia", Font.PLAIN, 18));
+        listaAutores.setFont(new Font("Georgia", Font.PLAIN, 20));
 
-        JScrollPane scroll = new JScrollPane(listaAutores);
-        add(scroll, BorderLayout.CENTER);
+        add(new JScrollPane(listaAutores), BorderLayout.CENTER);
 
-        //     MENÚ CONTEXTUAL (Clic derecho sobre un autor)
+        // MENÚ CONTEXTUAL
 
         menuContextual = new JPopupMenu();
 
@@ -40,23 +41,28 @@ public class PanelAutores extends JPanel {
         menuContextual.add(itemCola);
         menuContextual.add(itemVerMas);
 
-        // Listener para mostrar el menú al hacer clic derecho
+        // MOSTRAR MENÚ AL HACER CLIC DERECHO
+
         listaAutores.addMouseListener(new MouseAdapter() {
+
             @Override
             public void mousePressed(MouseEvent e) {
-                mostrarMenuSiProcede(e);
+                mostrarMenu(e);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                mostrarMenuSiProcede(e);
+                mostrarMenu(e);
             }
 
-            private void mostrarMenuSiProcede(MouseEvent e) {
+            private void mostrarMenu(MouseEvent e) {
+
                 if (e.isPopupTrigger()) { // clic derecho
-                    int index = listaAutores.locationToIndex(e.getPoint());
-                    if (index >= 0) {
-                        listaAutores.setSelectedIndex(index);
+
+                    int idx = listaAutores.locationToIndex(e.getPoint());
+
+                    if (idx >= 0) {
+                        listaAutores.setSelectedIndex(idx);
                         menuContextual.show(listaAutores, e.getX(), e.getY());
                     }
                 }
@@ -64,13 +70,14 @@ public class PanelAutores extends JPanel {
         });
     }
 
-    // Método para cargar autores desde el menú principal
+
+    // MÉTODO PARA CARGAR AUTORES
     public void cargarAutores(String[] autores) {
         modelo.clear();
         for (String a : autores) modelo.addElement(a);
     }
 
-    // Permite que MenuPrincipal pueda obtener la selección
+    // Permite al menú principal acceder a la lista seleccionada
     public JList<String> getListaAutores() {
         return listaAutores;
     }

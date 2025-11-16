@@ -5,41 +5,62 @@ import java.awt.*;
 
 public class PanelInfoAutor extends JPanel {
 
-    private JLabel titulo;
-    private JLabel imagen;
-    private JTextArea info;
+    private JLabel lblTitulo;
+    private JLabel lblImagen;
+    private JTextArea txtInfo;
 
     public PanelInfoAutor() {
 
         setBackground(new Color(33, 20, 15));
         setLayout(new BorderLayout());
 
-        titulo = new JLabel("Selecciona un autor", SwingConstants.CENTER);
-        titulo.setForeground(new Color(231, 199, 122));
-        titulo.setFont(new Font("Georgia", Font.BOLD, 26));
+        lblTitulo = new JLabel("Selecciona un autor");
+        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTitulo.setForeground(new Color(231, 199, 122));
+        lblTitulo.setFont(new Font("Georgia", Font.BOLD, 28));
 
-        imagen = new JLabel("", SwingConstants.CENTER);
+        lblImagen = new JLabel();
+        lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
 
-        info = new JTextArea();
-        info.setEditable(false);
-        info.setBackground(new Color(33, 20, 15));
-        info.setForeground(Color.WHITE);
-        info.setFont(new Font("Georgia", Font.PLAIN, 16));
-        info.setLineWrap(true);
-        info.setWrapStyleWord(true);
+        txtInfo = new JTextArea();
+        txtInfo.setEditable(false);
+        txtInfo.setLineWrap(true);
+        txtInfo.setWrapStyleWord(true);
+        txtInfo.setForeground(new Color(231,199,122));
+        txtInfo.setBackground(new Color(33, 20, 15));
+        txtInfo.setFont(new Font("Georgia", Font.PLAIN, 16));
 
-        add(titulo, BorderLayout.NORTH);
-        add(imagen, BorderLayout.CENTER);
-        add(info, BorderLayout.SOUTH);
+        add(lblTitulo, BorderLayout.NORTH);
+        add(lblImagen, BorderLayout.CENTER);
+        add(new JScrollPane(txtInfo), BorderLayout.SOUTH);
     }
 
-    public void mostrarAutor(String nombre) {
-        titulo.setText(nombre);
+    // Cargar imagen según autor
+    private ImageIcon cargarImagen(String nombreArchivo){
+        try {
+            return new ImageIcon(
+                    new ImageIcon(getClass().getResource("/autores/" + nombreArchivo))
+                            .getImage()
+                            .getScaledInstance(250, 250, Image.SCALE_SMOOTH)
+            );
+        } catch (Exception e){
+            return null;
+        }
+    }
 
-        // Cuando tengas las imágenes, las cargamos así:
-        // ImageIcon foto = new ImageIcon(getClass().getResource("/mozart.png"));
-        // imagen.setIcon(foto);
+    // Método público para actualizar la información
+    public void mostrarAutor(String nombre, String imagen, String bio){
 
-        info.setText("Información básica de " + nombre + ".\nPronto añadiremos más detalles.");
+        lblTitulo.setText(nombre);
+
+        ImageIcon img = cargarImagen(imagen);
+
+        if(img != null){
+            lblImagen.setIcon(img);
+        } else {
+            lblImagen.setIcon(null);
+        }
+
+        txtInfo.setText(bio);
     }
 }
