@@ -1,4 +1,4 @@
-package ui;
+package main.ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,9 +6,10 @@ import java.awt.*;
 public class PanelReproductor extends JPanel {
 
     // Método para cargar iconos desde resources
-    private ImageIcon cargarIcono(String nombre) {
-        return new ImageIcon(getClass().getResource("/resources/" + nombre));
+    private ImageIcon cargarIcono(String nombre){
+        return new ImageIcon(getClass().getResource("/" + nombre));
     }
+
 
     // Método para estilizar botones
     private void estilizar(JButton b) {

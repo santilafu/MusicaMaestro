@@ -1,4 +1,4 @@
-package ui;
+package main.ui;
 // En esta clase estara el menu principal de la aplicacion
 // desde donde se podra acceder a las diferentes funcionalidades
 // Importamos las librerias necesarias para crear la interfaz grafica

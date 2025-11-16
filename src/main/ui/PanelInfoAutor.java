@@ -1,4 +1,4 @@
-package ui;
+package main.ui;
 // Clase para el panel de informacion del autor que mostrara la informacion del autor seleccionado en el centro
 // Importamos las librerias necesarias para crear la interfaz grafica
 import javax.swing.*;
