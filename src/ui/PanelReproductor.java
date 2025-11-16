@@ -1,47 +1,60 @@
 package ui;
-// Clase para el panel del reproductor que estara en la parte inferior
-// Importamos las librerias necesarias para crear la interfaz grafica
+
 import javax.swing.*;
 import java.awt.*;
+
 public class PanelReproductor extends JPanel {
+
+    // Método para cargar iconos desde resources
+    private ImageIcon cargarIcono(String nombre) {
+        return new ImageIcon(getClass().getResource("/resources/" + nombre));
+    }
+
+    // Método para estilizar botones
+    private void estilizar(JButton b) {
+        b.setFocusPainted(false);
+        b.setBorderPainted(false);
+        b.setContentAreaFilled(false);
+        b.setOpaque(false);
+        b.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
     // Constructor
     public PanelReproductor() {
-        // Configuramos el panel
-        setBackground(new Color(62, 39, 35));  // Color de fondo
-        setPreferredSize(new Dimension(0, 100)); // Tamaño preferido del panel en la parte inferior
-        setLayout(new FlowLayout(FlowLayout.CENTER, 20, 25)); // Layout del panel para organizar los botones
 
-        //Colores elegantes
+        // Fondo del panel inferior
+        setBackground(new Color(62, 39, 35));
+        setPreferredSize(new Dimension(0, 100));
+        setLayout(new FlowLayout(FlowLayout.CENTER, 25, 25));
+
+        // Colores y tipografía
         Color dorado = new Color(231, 199, 122);
-        Font f = new Font("Segoe UI", Font.BOLD, 18);
 
-        // Creamos los botones del reproductor
-        JButton btnAtras = new JButton("<<");
-        JButton btnPlay = new JButton("▶");
-        JButton btnAdelante = new JButton(">>");
-        JButton btnPause = new JButton("❙❙");
-        JButton btnStop = new JButton("■");
+        // Crear botones con iconos
+        JButton btnAtras = new JButton(cargarIcono("btnAtras.png"));
+        JButton btnPlay = new JButton(cargarIcono("btnPlay.png"));
+        JButton btnAdelante = new JButton(cargarIcono("btnAdelante.png"));
+        JButton btnPause = new JButton(cargarIcono("pausa.png"));
+        JButton btnStop = new JButton(cargarIcono("detener.png"));
 
-        JButton [] botones = {btnAtras, btnPlay, btnAdelante, btnPause, btnStop}; // Array con los botones para aplicar estilos
+        // Estilizar botones
+        estilizar(btnAtras);
+        estilizar(btnPlay);
+        estilizar(btnAdelante);
+        estilizar(btnPause);
+        estilizar(btnStop);
 
-        // Aplicamos estilos a los botones
-        for (JButton btn : botones) {
-            btn.setFont(f); // Fuente del boton
-            btn.setBackground(dorado); // Color de fondo dorado
-            btn.setForeground(new Color(44, 26, 10)); // Color de texto
-            btn.setFocusPainted(false); // Quitar el borde de enfoque
-            btn.setBorderPainted(false); // Quitar el borde del boton
-            btn.setPreferredSize(new Dimension(60, 40)); // Tamaño preferido del boton
-        }
+        // ICONO volumen
+        JLabel iconoVolumen = new JLabel(cargarIcono("volume.png"));
 
-        // Barra de volumen (slider)
-        JSlider volumen = new JSlider(0, 100, 50); // Minimo, Maximo, Valor inicial
-        volumen.setPreferredSize(new Dimension(150, 20)); // Tamaño preferido
-        volumen.setBackground(new Color(62, 39, 35)); // Color de fondo del slider
-        volumen.setForeground(dorado); // Color del slider
+        // Slider de volumen
+        JSlider volumen = new JSlider(0, 100, 50);
+        volumen.setPreferredSize(new Dimension(150, 20));
+        volumen.setBackground(new Color(62, 39, 35));
+        volumen.setForeground(dorado);
 
-
-        // Agregamos los botones al panel y slider de volumen
+        // Añadir al panel
+        add(iconoVolumen);
         add(volumen);
         add(btnAtras);
         add(btnPlay);
